@@ -1,0 +1,12 @@
+Distributed MPI Matrix Multiplication
+
+Matrix Size: 4000 x 4000
+Number of MPI Processes: 4
+
+Rank 0: master - 1000 rows
+Rank 1: worker1 - 1000 rows
+Rank 2: worker2 - 1000 rows
+Rank 3: worker3 - 1000 rows
+
+Execution Time: 82.515692 seconds
+Verification C[0][0] = 4000.00
