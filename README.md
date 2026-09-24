@@ -189,34 +189,9 @@ C[0][0] = 4000.00
 | Sequential | 4000.00 |
 | OpenMP | 4000.00 |
 | MPI | 4000.00 |
-| CUDA | Pending |
 
-# Repository Structure
 
-pgc-lab/
-│
-├── sequential/
-│   ├── matrix_sequential.c
-│   └── screenshots/
-│       └── 168 lab1.png
-│
-├── openmp/
-│   ├── matrix_openmp.c
-│   └── screenshots/
-│       └── 168 lab 2 open mp.png
-│
-├── mpi/
-│   ├── matrix_mpi.c
-│   ├── results.txt
-│   └── screenshots/
-│       └── 168 open mpi.png
-│
-├── cuda/
-│   ├── matrix_cuda.cu
-│   ├── results.txt
-│   └── screenshots/
-│
-└── README.md
+
 
 # Experiment Workflow
 
