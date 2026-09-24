@@ -1,4 +1,6 @@
+cd ~/pgc-lab
 
+cat > README.md <<'EOF'
 # Parallel Matrix Multiplication Lab
 
 ## Introduction
@@ -18,12 +20,122 @@ The correctness verification value is:
 
 ## Objectives
 
+- Implement sequential matrix multiplication.
+- Parallelize matrix multiplication using OpenMP.
+- Distribute matrix multiplication using MPI.
+- Implement matrix multiplication using CUDA.
+- Understand shared-memory and distributed-memory parallelism.
+- Measure execution time.
+- Compare the implementations.
+- Verify correctness of the computed matrix.
+
+# Part A – Sequential Matrix Multiplication
+
+The sequential implementation performs matrix multiplication using a single CPU thread.
+
+### Source File
+
+sequential/matrix_sequential.c
+
+### Compilation
+
+gcc -O2 matrix_sequential.c -o matrix_sequential
+
+### Execution
+
+./matrix_sequential
+
+### Result
+
+- Matrix Size: 4000 × 4000
+- Execution Time: **303.118438 seconds**
+- Verification: **C[0][0] = 4000.00**
+
+### Screenshot
+
+sequential/screenshots/168 lab1.png
+
+# Part B – OpenMP Matrix Multiplication
+
+OpenMP is used to parallelize matrix multiplication using multiple CPU threads.
+
+### Source File
+
+openmp/matrix_openmp.c
+
+### Compilation
+
+gcc -O2 -fopenmp matrix_openmp.c -o matrix_openmp
+
+### Execution
+
+./matrix_openmp
+
+### Result
+
+- Matrix Size: 4000 × 4000
+- Execution Time: **61.120517 seconds**
+- Verification: **C[0][0] = 4000.00**
+
+### Screenshot
+
+openmp/screenshots/168 lab 2 open mp.png
+
+# Part C – MPI Distributed Matrix Multiplication
+
+MPI is used to distribute matrix multiplication across four Ubuntu virtual machines.
+
+### MPI Cluster
+
+| Rank | Host | IP Address | Rows |
+|---|---|---|---:|
+| Rank 0 | master | 192.168.109.129 | 1000 |
+| Rank 1 | worker1 | 192.168.109.130 | 1000 |
+| Rank 2 | worker2 | 192.168.109.131 | 1000 |
+| Rank 3 | worker3 | 192.168.109.132 | 1000 |
+
+### MPI Hostfile
+
+master slots=1
+worker1 slots=1
+worker2 slots=1
+worker3 slots=1
+
+### Source File
+
+mpi/matrix_mpi.c
+
+### Compilation
+
+mpicc -O2 matrix_mpi.c -o matrix_mpi
+
+### Execution
+
+mpirun -np 4 --hostfile hosts ./matrix_mpi
+
+### Result
+
+- Matrix Size: 4000 × 4000
+- MPI Processes: 4
+- Execution Time: **82.515692 seconds**
+- Verification: **C[0][0] = 4000.00**
+
+### Results File
+
+mpi/results.txt
+
+### Screenshot
+
+mpi/screenshots/168 open mpi.png
+
+# Part D – CUDA Matrix Multiplication
 
 CUDA is used to implement matrix multiplication using GPU parallelism.
 
 ### CUDA Configuration
 
 - Matrix Size: 4000 × 4000
+- Block Size: 16 × 16
 - Threads per Block: 256
 - Grid Size: 250 × 250
 - Total Matrix Elements: 16,000,000
@@ -66,69 +178,24 @@ The CUDA implementation will be executed on a suitable NVIDIA CUDA-capable syste
 | Sequential | 4000 × 4000 | 1 CPU thread | 303.118438 s |
 | OpenMP | 4000 × 4000 | Multiple CPU threads | 61.120517 s |
 | MPI | 4000 × 4000 | 4 MPI processes | 82.515692 s |
-- Block Size: 16 × 16
-# Part D – CUDA Matrix Multiplication
-
-- Implement sequential matrix multiplication.
-
-mpi/screenshots/168 open mpi.png
-- Parallelize matrix multiplication using OpenMP.
 | CUDA | 4000 × 4000 | GPU | Pending |
 
-- Distribute matrix multiplication using MPI.
-
 # Correctness Verification
-### Results File
-
 
 Expected result:
-### Screenshot
 
-mpi/results.txt
-- Implement matrix multiplication using CUDA.
-- Understand shared-memory and distributed-memory parallelism.
-
-- Measure execution time.
-- MPI Processes: 4
 C[0][0] = 4000.00
-- Execution Time: **82.515692 seconds**
-- Verification: **C[0][0] = 4000.00**
 
-- Compare the implementations.
 | Implementation | Verification |
 |---|---:|
 | Sequential | 4000.00 |
-- Verify correctness of the computed matrix.
-
-# Part A – Sequential Matrix Multiplication
-
-The sequential implementation performs matrix multiplication using a single CPU thread.
-
-### Source File
-
-sequential/matrix_sequential.c
-
-### Compilation
-
 | OpenMP | 4000.00 |
-### Result
-
 | MPI | 4000.00 |
-- Matrix Size: 4000 × 4000
-
 | CUDA | Pending |
-gcc -O2 matrix_sequential.c -o matrix_sequential
-
-
-### Execution
 
 # Repository Structure
-./matrix_sequential
 
 pgc-lab/
-
-### Result
-
 │
 ├── sequential/
 │   ├── matrix_sequential.c
@@ -222,65 +289,4 @@ CUDA results will be added after executing the CUDA implementation on an NVIDIA 
 All execution times reported in this README are actual measured results from the systems used during the experiment.
 
 CUDA sample or reference timings from the laboratory manual are not used as actual experimental results.
-EOF### Execution
-
-mpirun -np 4 --hostfile hosts ./matrix_mpi
-- Matrix Size: 4000 × 4000
-- Execution Time: **303.118438 seconds**
-- Verification: **C[0][0] = 4000.00**
-
-### Screenshot
-
-mpicc -O2 matrix_mpi.c -o matrix_mpi
-
-
-sequential/screenshots/168 lab1.png
-
-# Part B – OpenMP Matrix Multiplication
-
-OpenMP is used to parallelize matrix multiplication using multiple CPU threads.
-
-### Source File
-### Compilation
-
-### Source File
-
-mpi/matrix_mpi.c
-
-openmp/matrix_openmp.c
-
-### Compilation
-
-worker1 slots=1
-worker2 slots=1
-worker3 slots=1
-
-gcc -O2 -fopenmp matrix_openmp.c -o matrix_openmp
-
-master slots=1
-### Execution
-
-### MPI Hostfile
-
-./matrix_openmp
-
-### Result
-
-- Matrix Size: 4000 × 4000
-- Execution Time: **61.120517 seconds**
-- Verification: **C[0][0] = 4000.00**
-
-### Screenshot
-
-
-openmp/screenshots/168 lab 2 open mp.png
-
-# Part C – MPI Distributed Matrix Multiplication
-
-MPI is used to distribute matrix multiplication across four Ubuntu virtual machines.
-
-| Rank 3 | worker3 | 192.168.109.132 | 1000 |
-### MPI Cluster
-| Rank 1 | worker1 | 192.168.109.130 | 1000 |
-| Rank 2 | worker2 | 192.168.109.131 | 1000 |
-
+EOF
