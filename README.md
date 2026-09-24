@@ -1,6 +1,4 @@
-cd ~/pgc-lab
 
-cat > README.md <<'EOF'
 # Parallel Matrix Multiplication Lab
 
 ## Introduction
