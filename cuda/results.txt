@@ -1,0 +1,14 @@
+CUDA Matrix Multiplication
+
+GPU: NVIDIA GeForce RTX 5060 Ti
+Compute Capability: 12.0
+
+Matrix Size: 4000 x 4000
+Block Size: 16 x 16
+Grid Size: 250 x 250
+
+CUDA Kernel Execution Time: 0.088401 seconds
+Verification C[0][0] = 4000.00
+
+Compilation:
+nvcc -O2 -arch=sm_120 matrix_cuda.cu -o matrix_cuda.exe
